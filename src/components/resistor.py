@@ -5,7 +5,6 @@ class Resistor(Component):
         super().__init__(id, value, nodes)
         self.type = 'Resistor'
         self.G = 1.0/self.value
-        self.extra_nodes = 0
 
     def stamp(self,circuitA,circuitb):
         circuitA[self.nodes[0],self.nodes[0]] += self.G

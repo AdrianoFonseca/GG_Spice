@@ -1,4 +1,5 @@
-from components.resistor import Resistor 
+from components.resistor import *
+from components.opamp import *
 from components.sources import *
 
 class Parser():
@@ -81,6 +82,12 @@ class Parser():
                 component_nodes = [int(args[0]), int(args[1]), int(args[2]), int(args[3])]
                 component_value = self.sip2num(args[4])
                 elements.append(VCCSource(component_id, component_value, component_nodes))
+
+            elif component_id[0].lower() == 'o':
+                component_nodes = [int(args[0]), int(args[1]), int(args[2]), int(args[3])]
+                elements.append(OpAmp(component_id, None, component_nodes, self.num_nodes))
+                self.num_nodes += 1
+                out_names.append('j' + component_id)
 
             else:
                 print('Invalid Element in Netlist!!')
