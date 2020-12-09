@@ -41,8 +41,8 @@ class Diode(Component):
         circuitb[self.nodes[1]] += I
 
     def update_biaspoint(self,circuitE, circuitA,circuitb):
-        circuitE = [0] + circuitE
-        vd = circuitE[self.node[0]] - circuitE[self.node[1]]
+        E = [0] + circuitE
+        vd = E[self.node[0]] - E[self.node[1]]
 
         self.stamp(self,circuitA,circuitb, -1)
         

@@ -91,11 +91,10 @@ class Parser():
 
             elif component_id[0].lower() == 'd':
                 component_nodes = [int(args[0]), int(args[1])]
-                component_value = self.sip2num(args[2].split('=')[1])
 
                 kwargs = {'js' : None, 'vt' : None, 'n' : None }
                 
-                for arg in range(3,len(args)):
+                for arg in range(2,len(args)):
                     var = args[arg].split('=')
                     if(var[0] == 'VT'):
                         kwargs['vt'] = self.sip2num(var[1])
@@ -103,8 +102,10 @@ class Parser():
                         kwargs['js'] = self.sip2num(var[1])
                     if(var[0] == 'N'):
                         kwargs['n'] = self.sip2num(var[1])   
+
+                print(kwargs)
                     
-                elements.append(Diode(component_id, None, component_nodes, self.num_nodes, **{k: v for k, v in kwargs.items() if v is not None}))
+                elements.append(Diode(component_id, component_nodes, **{k: v for k, v in kwargs.items() if v is not None}))
 
             else:
                 print('Invalid Element in Netlist!!')
