@@ -1,4 +1,4 @@
-from parser import Parser
+from utils.parser import Parser
 from solver.dc_solver import DCSolver
 
 if __name__ == '__main__':
