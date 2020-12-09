@@ -6,4 +6,5 @@ if __name__ == '__main__':
     parser = Parser(netlist_example)
     solver = DCSolver(parser.elements, parser.num_nodes)
     solver.NewtonRapshon()
-    print(solver.circuitE)
+    solver.show_output()
+    print(parser.out_names)

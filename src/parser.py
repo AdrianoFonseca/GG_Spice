@@ -107,7 +107,6 @@ class Parser():
 
             else:
                 print('Invalid Element in Netlist!!')
-
         
         return elements, out_names
 

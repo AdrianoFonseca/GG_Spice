@@ -6,7 +6,7 @@ class Solver():
         self.nonlinear = []
         self.circuitA = np.zeros((num_nodes, num_nodes))
         self.circuitb = np.zeros((num_nodes, 1))
-        self.circuitE = None
+        self.circuitE = np.zeros((num_nodes, 1))
         
     def update_system():
         pass
@@ -15,4 +15,7 @@ class Solver():
         pass
 
     def debug(self):
+        pass
+
+    def show_output(self):
         pass

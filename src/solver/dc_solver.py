@@ -6,7 +6,7 @@ class DCSolver(Solver):
     def __init__(self, elements_list, num_nodes):
         super().__init__(elements_list, num_nodes)
         self.update_system()
-        self.circuitE = self.solve()
+        self.circuitE[1:] = self.solve()
 
     
     def update_system(self):
@@ -22,10 +22,11 @@ class DCSolver(Solver):
         for iter in range(200):
             for element in self.nonlinear:
                 element.update_biaspoint(self.circuitE, self.circuitA, self.circuitb)
-            out = self.solve()
-            if (np.mean(self.solve() - self.circuitE)**2) < 1e-5:
-                break
 
-
+            self.circuitE[1:]  = self.solve()
+            
     def debug(self):
         print(self.circuitA, self.circuitB)
+
+    def show_output(self):
+        print(self.circuitE[1:])

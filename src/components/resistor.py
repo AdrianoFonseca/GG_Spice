@@ -22,16 +22,15 @@ class Diode(Component):
         self.vt = n*vt
         self.linear = False
 
-        self.vd = 1
-        self.G = self.diodederiv()
-        self.I = self.diodefunc() - self.G*self.vd
-
+        self.vd = 0.6
+        self.G = self.diode_conductance(self.vd)
+        self.I = self.diode_current(self.vd) - self.G*self.vd
 
     def stamp(self,circuitA,circuitb,add=1):
 
         G = self.G * add
-        I = self.G * add
-        
+        I = self.I * add
+
         circuitA[self.nodes[0],self.nodes[0]] += G
         circuitA[self.nodes[0],self.nodes[1]] -= G
         circuitA[self.nodes[1],self.nodes[0]] -= G
@@ -42,21 +41,22 @@ class Diode(Component):
 
     def update_biaspoint(self,circuitE, circuitA,circuitb):
 
-        E = np.concatenate([[[0]],circuitE])   
-
-        self.vd = E[self.nodes[1]] - E[self.nodes[0]]
-
         self.stamp(circuitA,circuitb,-1)
-        
-        self.G = self.diodederiv()
-        self.I = self.diodefunc() - self.G*self.vd
 
-        self.stamp(circuitA,circuitb)
+        vd = circuitE[self.nodes[0]] - circuitE[self.nodes[1]]
         
-    def diodefunc(self):
-	    return(self.js*(np.exp(self.vd/self.vt)-1))
+        self.vd = vd[0]
+        self.G = self.diode_conductance(self.vd) 
+        self.I = self.diode_current(self.vd) - self.G*self.vd
 
-    def diodederiv(self):
-	    return((self.js/self.vt)*np.exp(self.vd/self.vt))
+        self.stamp(circuitA,circuitb,1)
+
+
+        
+    def diode_current(self,vd):
+	    return(self.js*(np.exp(vd/self.vt)-1))
+
+    def diode_conductance(self,vd):
+	    return((self.js/self.vt)*np.exp(vd/self.vt))
 
 
