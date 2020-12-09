@@ -12,7 +12,7 @@ class DCSolver(Solver):
     def update_system(self):
         for element in self.elements_list:
             element.stamp(self.circuitA, self.circuitb)
-            if(element.linear == False):
+            if(not element.linear):
                 self.nonlinear.append(element)
 
     def solve(self):
@@ -22,7 +22,8 @@ class DCSolver(Solver):
         for iter in range(200):
             for element in self.nonlinear:
                 element.update_biaspoint(self.circuitE, self.circuitA, self.circuitb)
-            if (self.solve() - self.circuitE) < 1e-5:
+            out = self.solve()
+            if (np.mean(self.solve() - self.circuitE)**2) < 1e-5:
                 break
 
 
