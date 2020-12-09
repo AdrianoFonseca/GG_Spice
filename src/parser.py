@@ -94,16 +94,15 @@ class Parser():
                 component_value = self.sip2num(args[2].split('=')[1])
 
                 kwargs = {'js' : None, 'vt' : None, 'n' : None }
-  
-                if(len(args) > 3):
-                    for arg in range(3,len(args)):
-                        var = args[arg].split('=')
-                        if(var[0] == 'VT'):
-                            kwargs['vt'] = self.sip2num(var[1])
-                        if(var[0] == 'IS'):
-                            kwargs['js'] = self.sip2num(var[1])
-                        if(var[0] == 'N'):
-                            kwargs['n'] = self.sip2num(var[1])   
+                
+                for arg in range(3,len(args)):
+                    var = args[arg].split('=')
+                    if(var[0] == 'VT'):
+                        kwargs['vt'] = self.sip2num(var[1])
+                    if(var[0] == 'IS'):
+                        kwargs['js'] = self.sip2num(var[1])
+                    if(var[0] == 'N'):
+                        kwargs['n'] = self.sip2num(var[1])   
                     
                 elements.append(Diode(component_id, None, component_nodes, self.num_nodes, **{k: v for k, v in kwargs.items() if v is not None}))
 
