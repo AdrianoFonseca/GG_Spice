@@ -102,8 +102,6 @@ class Parser():
                         kwargs['js'] = self.sip2num(var[1])
                     if(var[0] == 'N'):
                         kwargs['n'] = self.sip2num(var[1])   
-
-                print(kwargs)
                     
                 elements.append(Diode(component_id, component_nodes, **{k: v for k, v in kwargs.items() if v is not None}))
 

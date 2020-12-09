@@ -3,8 +3,10 @@ import numpy as np
 class Solver():
     def __init__(self, elements_list, num_nodes):
         self.elements_list = elements_list
+        self.nonlinear = []
         self.circuitA = np.zeros((num_nodes, num_nodes))
-        self.circuitB = np.zeros((num_nodes, 1))
+        self.circuitb = np.zeros((num_nodes, 1))
+        self.circuitE = None
         
     def update_system():
         pass
