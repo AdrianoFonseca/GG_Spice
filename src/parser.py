@@ -42,38 +42,38 @@ class Parser():
             if component_id[0].lower() == 'r':
                 component_nodes = [int(args[0]), int(args[1])]
                 component_value = self.sip2num(args[2])
-                elements.append(Resistor(component_id, component_value, component_nodes))
+                elements.append(Resistor(component_id, component_nodes, component_value))
                 
             elif component_id[0].lower() == 'i':
                 component_nodes = [int(args[0]), int(args[1])]
                 component_value = self.sip2num(args[3])
-                elements.append(CurrentSource(component_id, component_value, component_nodes))
+                elements.append(CurrentSource(component_id, component_nodes, component_value))
 
             elif component_id[0].lower() == 'v':
                 component_nodes = [int(args[0]), int(args[1])]
                 component_value = self.sip2num(args[3])
-                elements.append(VoltageSource(component_id, component_value, component_nodes, self.num_nodes))
+                elements.append(VoltageSource(component_id, component_nodes, component_value, self.num_nodes))
                 self.num_nodes += 1
                 out_names.append('j' + component_id)
 
             elif component_id[0].lower() == 'e':
                 component_nodes = [int(args[0]), int(args[1]), int(args[2]), int(args[3])]
                 component_value = self.sip2num(args[4])
-                elements.append(VCVSource(component_id, component_value, component_nodes, self.num_nodes))
+                elements.append(VCVSource(component_id, component_nodes, component_value, self.num_nodes))
                 self.num_nodes += 1
                 out_names.append('j' + component_id)
 
             elif component_id[0].lower() == 'f':
                 component_nodes = [int(args[0]), int(args[1]), int(args[2]), int(args[3])]
                 component_value = self.sip2num(args[4])
-                elements.append(CCCSource(component_id, component_value, component_nodes, self.num_nodes))
+                elements.append(CCCSource(component_id, component_nodes, component_value, self.num_nodes))
                 self.num_nodes += 1 
                 out_names.append('j' + component_id)
 
             elif component_id[0].lower() == 'h':
                 component_nodes = [int(args[0]), int(args[1]), int(args[2]), int(args[3])]
                 component_value = self.sip2num(args[4])
-                elements.append(CCVSource(component_id, component_value, component_nodes, [self.num_nodes,self.num_nodes + 1]))
+                elements.append(CCVSource(component_id, component_nodes, component_value, [self.num_nodes,self.num_nodes + 1]))
                 self.num_nodes += 2
                 out_names.append('jx' + component_id)
                 out_names.append('jy' + component_id)
@@ -81,13 +81,31 @@ class Parser():
             elif component_id[0].lower() == 'g':
                 component_nodes = [int(args[0]), int(args[1]), int(args[2]), int(args[3])]
                 component_value = self.sip2num(args[4])
-                elements.append(VCCSource(component_id, component_value, component_nodes))
+                elements.append(VCCSource(component_id, component_nodes, component_value))
 
             elif component_id[0].lower() == 'o':
                 component_nodes = [int(args[0]), int(args[1]), int(args[2]), int(args[3])]
-                elements.append(OpAmp(component_id, None, component_nodes, self.num_nodes))
+                elements.append(OpAmp(component_id, component_nodes, None, self.num_nodes))
                 self.num_nodes += 1
                 out_names.append('j' + component_id)
+
+            elif component_id[0].lower() == 'd':
+                component_nodes = [int(args[0]), int(args[1])]
+                component_value = self.sip2num(args[2].split('=')[1])
+
+                kwargs = {'js' : None, 'vt' : None, 'n' : None }
+  
+                if(len(args) > 3):
+                    for arg in range(3,len(args)):
+                        var = args[arg].split('=')
+                        if(var[0] == 'VT'):
+                            kwargs['vt'] = self.sip2num(var[1])
+                        if(var[0] == 'IS'):
+                            kwargs['js'] = self.sip2num(var[1])
+                        if(var[0] == 'N'):
+                            kwargs['n'] = self.sip2num(var[1])   
+                    
+                elements.append(Diode(component_id, None, component_nodes, self.num_nodes, **{k: v for k, v in kwargs.items() if v is not None}))
 
             else:
                 print('Invalid Element in Netlist!!')

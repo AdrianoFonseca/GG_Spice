@@ -1,8 +1,8 @@
 from .component import Component
 
 class CurrentSource(Component):
-    def __init__(self, id, value, nodes):
-        super().__init__(id, value, nodes)
+    def __init__(self, id, nodes, value):
+        super().__init__(id, nodes, value)
         self.type = 'Current Source'        
     
     def stamp(self,circuitA,circuitb):
@@ -12,8 +12,8 @@ class CurrentSource(Component):
 
 class VoltageSource(Component):
 
-    def __init__(self, id, value, nodes, extra_nodes):
-        super().__init__(id, value, nodes)
+    def __init__(self, id, nodes, value, extra_nodes):
+        super().__init__(id, nodes, value)
         self.type = 'Voltage Source'
         self.extra_nodes = extra_nodes
         
@@ -28,8 +28,8 @@ class VoltageSource(Component):
 
 class VCVSource(Component):
 
-    def __init__(self, id, value, nodes, extra_nodes):
-        super().__init__(id, value, nodes)
+    def __init__(self, id, nodes, value, extra_nodes):
+        super().__init__(id, nodes, value)
         self.type = 'Voltage Controlled Voltage Source'
         self.extra_nodes = extra_nodes
         
@@ -45,8 +45,8 @@ class VCVSource(Component):
 
 class CCCSource(Component):
 
-    def __init__(self, id, value, nodes, extra_nodes):
-        super().__init__(id, value, nodes)
+    def __init__(self, id, nodes, value, extra_nodes):
+        super().__init__(id, nodes, value)
         self.type = 'Current Controlled Current Source'
         self.extra_nodes = extra_nodes
         
@@ -62,8 +62,8 @@ class CCCSource(Component):
 
 class CCVSource(Component):
 
-    def __init__(self, id, value, nodes, extra_nodes):
-        super().__init__(id, value, nodes)
+    def __init__(self, id, nodes, value, extra_nodes):
+        super().__init__(id, nodes, value)
         self.type = 'Current Controlled Voltage Source'
         self.extra_nodes = extra_nodes
         
@@ -83,8 +83,8 @@ class CCVSource(Component):
 
 class VCCSource(Component):
 
-    def __init__(self, id, value, nodes):
-        super().__init__(id, value, nodes)
+    def __init__(self, id, nodes, value):
+        super().__init__(id, nodes, value)
         self.type = 'Voltage Controlled Current Source'
         
     def stamp(self,circuitA,circuitb):

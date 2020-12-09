@@ -1,8 +1,8 @@
 from .component import Component
 
 class OpAmp(Component):
-    def __init__(self, id, value, nodes, extra_nodes):
-        super().__init__(id, value, nodes)
+    def __init__(self, id, nodes, value, extra_nodes):
+        super().__init__(id, nodes, value)
         self.type = 'Ideal Operational Amplifier'
         self.extra_nodes = extra_nodes
 
