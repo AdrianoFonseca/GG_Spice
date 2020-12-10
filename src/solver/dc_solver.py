@@ -20,7 +20,7 @@ class DCSolver(Solver):
     def solve(self):
         return np.linalg.solve(self.circuitA[1:,1:],self.circuitb[1:])
 
-    def NewtonRapshon(self):
+    def NewtonRaphson(self):
         for iter in range(self.max_iter):
             for element in self.nonlinear:
                 element.update_biaspoint(self.circuitE, self.circuitA, self.circuitb)
@@ -28,7 +28,9 @@ class DCSolver(Solver):
             temp = self.circuitE[1:].copy()
             self.circuitE[1:]  = self.solve()
             if(np.sum((temp - self.circuitE[1:])**2) < self.tol):
-                break
+                return self.circuitE
+                
+        return self.circuitE
             
     def debug(self):
         print(self.circuitA, self.circuitB)
